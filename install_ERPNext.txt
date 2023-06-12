@@ -1,0 +1,91 @@
+### Installation ERP Next 13 ###
+Step 1: Server Setup
+Step 2: Install Required Packages
+Step 3: Configure MySQL Server or Mariadb Server
+Step 4: Install CURL, Node, NPM, Yarn
+Step 5: Install Frappe Bench
+Step 6: Install ERPNext and other Apps
+Step 7: Setup Production Server
+
+
+*** Ubuntu 20: Server Setup *** step 1 
+sudo apt-get update 
+sudo apt-get upgrade 
+
+*** Install Required Packages & Tools *** step 2
+
+sudo apt install nginx  ×
+sudo apt install supervisor  ×
+
+sudo apt install redis-server
+sudo apt install git
+sudo apt-get install python3-dev
+sudo apt-get install python3-setuptools python3-pip
+sudo apt-get install virtualenv
+sudo apt-get install python3-venv
+
+
+
+*** Installation Mariadb-Server  *** step 3
+
+sudo apt install mariadb-server
+sudo apt install python3-mysqldb libmysqlclient-dev
+sudo mysql_secure_installation  >>> set password root
+sudo mysql 
+    [mariadb] ALTER USER 'root'@'localhost' IDENTIFIED BY 'D@123456';
+    [mariadb] FLUSH PRIVILEGES;
+sudo systemctl enable mariadb
+sudo systemctl start mariadb
+
+Now, edit the MariaDB configuration file.
+
+sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+And add this configuration
+
+[mysqld].50-server.cnf
+      character-set-client-handshake = FALSE
+      character-set-server = utf8mb4
+      collation-server = utf8mb4_unicode_ci
+
+[mysql].50-server.cnf
+     default-character-set = utf8mb4
+sudo service mysql restart
+
+*** Install CURL, Node, NPM, Yarn *** step 4
+
+4.1 Install CURL
+sudo apt install curl
+4.2 Install Node
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+source ~/.profile
+nvm install 16.15.0
+
+4.3 Install NPM
+sudo apt-get install npm
+
+4.4 Install Yarn
+sudo npm install -g yarn
+
+*** Install Frappe & ERP & production *** step 5
+sudo pip3 install frappe-bench
+bench init --frappe-branch version-13 yamanai
+cd yamanai/
+ls apps/
+bench get-app erpnext --branch version-13
+bench new-site site1
+bench use site1
+bench install-app erpnext
+bench start   / bench migrate
+sudo bench setup production melyamany
+sudo service nginx restart
+
+
+
+
+
+
+
+
+
+
+
