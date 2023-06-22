@@ -68,9 +68,21 @@ sudo nano /etc/supervisor/supervisord.conf
  *chmod = 0760 *chown = melyamany:melyamany
 sudo service supervisor restart
 
-PDF
-sudo apt install wkhtmltopdf
 
+
+*** Install ERP Dynamic ***
+
+bench get-app https://github.com/melyamany1997/dynamic.git
+ls sites/
+bench --site erp-dynamic install-app dynamic
+bench restart
+sudo service nginx restart && sudo service supervisor restart 
+
+
+
+
+*** Install PDF Server ***
+sudo apt install wkhtmltopdf
 
 
 
